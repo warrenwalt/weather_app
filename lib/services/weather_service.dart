@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/models/weather_model.dart';
@@ -9,14 +10,11 @@ import 'package:http/http.dart' as http;
 
 class WeatherService {
   static const BASE_URL = 'https://weatherapi-com.p.rapidapi.com/current.json';
-  final String apiKey;
-
-  WeatherService(this.apiKey);
 
   Future<Weather> getWeather(String cityName) async {
     var url = Uri.parse('$BASE_URL?q=$cityName');
     var appHeaders = {
-      'X-RapidAPI-Key': '7b8c0385a6msh3c52b2c2e530c0dp18c14bjsn6b9d1061c385',
+      'X-RapidAPI-Key': DotEnv().env['WEATHER_API_KEY']!,
       'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com',
     };
     final response = await http
